@@ -1,0 +1,10 @@
+{
+  "api_uptime_sla_monitor": [
+    {
+      "timestamp": "2026-07-03 05:11:44.110965",
+      "status": "success",
+      "runtime_seconds": 0.84,
+      "telemetry_captured": "{\"error\": \"no_target\"}"
+    }
+  ]
+}

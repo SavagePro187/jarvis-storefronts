@@ -1,0 +1,1 @@
+{"OLLAMA_API_BASE": "http://127.0.0.1:11434", "MODEL_NAME": "qwen2.5-coder:1.5b", "CODER_MODEL_NAME": "qwen2.5-coder:1.5b", "DATABASE_PATH": "jarvis_accounting.db", "N8N_PRODUCTION_WEBHOOK": "http://127.0.0.1:5678/webhook/jarvis-gateway", "LOG_FILE": "jarvis_gateway.log"}
