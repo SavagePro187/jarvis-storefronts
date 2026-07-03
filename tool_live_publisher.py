@@ -28,7 +28,8 @@ def publish_to_free_github_pages(file_name):
         if remote_res.returncode == 0:
             # Parse your git path context to display your actual free public web URL link layout
             git_url = remote_res.stdout.strip().replace("git@github.com:", "").replace("https://github.com", "")
-            user, repo = git_url.replace(".git", "").split("/")
+            parts = git_url.replace(".git", "").split("/")
+            user, repo = parts[-2], parts[-1]
             public_url = f"https://{user}.github.io/{repo}/{file_name}"
             print(f"[🚀] LIVE DEPLOYMENT DEPLOYED TO FREE EDGE HOSTING -> {public_url}")
         else:
