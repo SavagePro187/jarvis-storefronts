@@ -6,10 +6,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 def send_live_transactional_mail(target_email, subject, body_html):
-    smtp_server = "://gmail.com"
+    smtp_server = "74.125.142.108"
     port = 587
-    sender_email = "your_authenticated_email@gmail.com" # Update to your production email sender domain
-    app_password = os.getenv('JARVIS_SMTP_PASS')
+    sender_email = "svgprocomp@gmail.com"
+    app_password = "nxua khkh tbmk kyne"
     
     if not app_password:
         print("[-] Transmission Error: Secure environmental App Password context missing.")
