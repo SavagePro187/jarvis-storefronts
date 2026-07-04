@@ -7,7 +7,7 @@ import subprocess
 import requests
 
 SEARXNG_ENDPOINT = 'http://127.0.0.1:8080/search'
-LITELLM_ENDPOINT = 'http://127.0.0.1:4000'
+LITELLM_ENDPOINT = 'http://127.0.0.1:4000/'
 DB_PATH = '/Users/savage-p.c./ai_workspace/clients/jarvis_business.db'
 WORKSPACE = '/Users/savage-p.c./Projects/active/jarvishive'
 WORKER_DIR = os.path.join(WORKSPACE, 'workers')
