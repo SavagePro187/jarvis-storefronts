@@ -101,17 +101,18 @@ def step_4_edge_publish(worker_path):
     return 'https://github.com'
 
 def step_5_searxng_scrape():
-    try:
-        res = requests.get(SEARXNG_ENDPOINT, params={'q': 'b2b platform security engineering software contacts email', 'format': 'json'}, timeout=8.0)
-        for item in res.json().get('results', []):
-            link = item.get('url', '')
-            if 'http' in link and not any(x in link for x in ['github', 'wikipedia', 'google']):
-                domain = link.split('//')[-1].split('/')
-                return {'company': domain.capitalize(), 'target_email': f'security@{domain}'}
-    except Exception:
-        pass
-    print('❌ CRITICAL: SearXNG returned 0 actionable corporate targets.')
-    sys.exit(1)
+    # Read the actual live domains found in your scan logs
+    live_domains = get_live_bounty_domains()
+    if not live_domains:
+        print('❌ CRITICAL: Cannot scrape targets. No live domains were discovered in Step 1. Halting.')
+        sys.exit(1)
+    # Take the first live validated domain caught by your real-time sweep
+    target_domain = live_domains[0]
+    # Isolate the company name cleanly from the asset string
+    company_name = target_domain.split('.')[-2].capitalize()
+    target_email = f'security@{target_domain}'
+    print(f'[✔] Dynamic target isolated from live scan: {company_name} -> {target_email}')
+    return {'company': company_name, 'target_email': target_email}
 
 def step_6_asset_generation(lead_node):
     print(f'[*] Preparing transaction pipeline for: {lead_node["target_email"]}')
