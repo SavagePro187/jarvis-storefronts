@@ -5,6 +5,12 @@
       "status": "success",
       "runtime_seconds": 0.84,
       "telemetry_captured": "{\"error\": \"no_target\"}"
+    },
+    {
+      "timestamp": "2026-07-04 09:46:23.560641",
+      "status": "success",
+      "runtime_seconds": 0.3,
+      "telemetry_captured": "{\"error\": \"no_target\"}"
     }
   ]
 }
