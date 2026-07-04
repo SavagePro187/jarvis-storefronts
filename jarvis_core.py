@@ -7,7 +7,7 @@ import subprocess
 import requests
 
 SEARXNG_ENDPOINT = 'http://127.0.0.1:8080/search'
-LITELLM_ENDPOINT = 'http://127.0.0.1:4000/v1/chat/completions'
+LITELLM_ENDPOINT = 'http://127.0.0.1:4000'
 DB_PATH = '/Users/savage-p.c./ai_workspace/clients/jarvis_business.db'
 WORKSPACE = '/Users/savage-p.c./Projects/active/jarvishive'
 WORKER_DIR = os.path.join(WORKSPACE, 'workers')
@@ -24,7 +24,7 @@ def run_local_llm(prompt, model="qwen2.5-commercial"):
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.1
         }
-        res = requests.post(LITELLM_ENDPOINT, json=payload, timeout=30.0)
+        res = requests.post(LITELLM_ENDPOINT, json=payload, timeout=90.0)
         data = res.json()
         if "choices" in data and len(data["choices"]) > 0:
             return data["choices"][0]["message"]["content"].strip()
