@@ -18,19 +18,19 @@ os.makedirs(WORKER_DIR, exist_ok=True)
 def append_audit_log(msg):
     print(f'[*] {msg}')
 
-def run_local_llm(prompt, model="qwen2.5-coder:1.5b"):
+def run_local_llm(prompt, model="registry.ollama.ai/library/qwen2.5-coder:1.5b"):
     try:
         payload = {
-            'model': model,
-            'messages': [{'role': 'user', 'content': prompt}],
-            'temperature': 0.1
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.1
         }
         res = requests.post(LITELLM_ENDPOINT, json=payload, timeout=30.0)
-        return res.json()['choices'][0]['message']['content'].strip()
-    except Exception as e:
-        print(f'❌ CRITICAL: Local LLM Connection Failed: {e}')
+        data = res.json()
+        if "choices" in data and len(data["choices"]) > 0:
+            return data["choices"][0]["message"]["content"].strip()
+        print(f"❌ SERVER ERROR PAYLOAD: {data}")
         sys.exit(1)
-
 def get_live_bounty_domains():
     active_targets = []
     if not os.path.exists(BOUNTY_DIR):
