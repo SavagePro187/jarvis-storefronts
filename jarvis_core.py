@@ -17,7 +17,7 @@ os.makedirs(WORKER_DIR, exist_ok=True)
 
 def append_audit_log(msg):
     print(f'[*] {msg}')
-def run_local_llm(prompt, model="registry.ollama.ai/library/qwen2.5-coder:1.5b"):
+def run_local_llm(prompt, model="qwen2.5-commercial"):
     try:
         payload = {
             "model": model,
