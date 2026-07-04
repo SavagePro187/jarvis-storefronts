@@ -1,26 +1,22 @@
 
 import requests
+from requests.exceptions import RequestException
 
-# Define the API endpoint for creating data
-api_endpoint = 'https://example.com/api/data'
+def fetch_salesforce_data(url):
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except RequestException as e:
+        print(f"Request failed: {e}")
+        exit(1)
 
-# Target parameters
-targets = {
-    'name': 'AI Training Data',
-    'description': 'High-quality AI training data for machine learning models.',
-    'type': 'raw',
-    'size': 1000,  # Size in MB
-    'format': 'json'
-}
+def main():
+    url = "https://your-salesforce-b2b-cloud-endpoint.com/api/data"
+    data = fetch_salesforce_data(url)
+    # Process the fetched data here
+    print("Data fetched successfully")
+    exit(0)
 
-# Send a POST request to the API endpoint with the target parameters
-response = requests.post(api_endpoint, json=targets)
-
-# Check if the request was successful
-if response.status_code == 200:
-    print("Data creation successful.")
-else:
-    print(f"Failed to create data. Status code: {response.status_code}")
-
-
-In this script, we start by importing the `requests` library, which will be used for making HTTP requests. We define the API endpoint and specify the target parameters in a dictionary called `targets`. The `type` parameter is set to 'raw' since we are creating raw data, but you can modify this based on your requirements. We then use `requests.post()` to send a POST request to the API endpoint with the target parameters encoded as JSON. Finally, we check if the request was successful and print an appropriate message based on the response status code.
+if __name__ == "__main__":
+    main()
