@@ -18,7 +18,7 @@ os.makedirs(WORKER_DIR, exist_ok=True)
 def append_audit_log(msg):
     print(f'[*] {msg}')
 
-def run_local_llm(prompt, model="qwen2.5-commercial"):
+def run_local_llm(prompt, model="qwen2.5-coder:1.5b"):
     try:
         payload = {
             'model': model,
