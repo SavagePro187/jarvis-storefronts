@@ -6,8 +6,8 @@ import sqlite3
 import subprocess
 import requests
 
-SEARXNG_ENDPOINT = 'http://127.0.0'
-LITELLM_ENDPOINT = 'http://127.0.0'
+SEARXNG_ENDPOINT = 'http://127.0.0.1:8080/search’
+LITELLM_ENDPOINT = 'http://127.0.0.1:4000/v1/chat/completions’
 DB_PATH = '/Users/savage-p.c./ai_workspace/clients/jarvis_business.db'
 WORKSPACE = '/Users/savage-p.c./Projects/active/jarvishive'
 WORKER_DIR = os.path.join(WORKSPACE, 'workers')
@@ -26,7 +26,7 @@ def run_local_llm(prompt, model="qwen2.5-commercial"):
             'temperature': 0.1
         }
         res = requests.post(LITELLM_ENDPOINT, json=payload, timeout=30.0)
-        return res.json()['choices']['message']['content'].strip()
+        return res.json()['choices'][0]['message']['content'].strip()
     except Exception as e:
         print(f'❌ CRITICAL: Local LLM Connection Failed: {e}')
         sys.exit(1)
@@ -80,7 +80,7 @@ def step_3_worker_factory(niche_title):
         print('❌ CRITICAL: Code factory failed to compile template code.')
         sys.exit(1)
     
-    worker_template = worker_template.replace('', '')
+    worker_template = worker_template.replace('```python', '').replace('```', '')
     worker_file_path = os.path.join(WORKER_DIR, 'active_revenue_worker.py')
     with open(worker_file_path, 'w', encoding='utf-8') as f:
         f.write(worker_template)
@@ -104,7 +104,7 @@ def step_5_searxng_scrape():
         for item in res.json().get('results', []):
             link = item.get('url', '')
             if 'http' in link and not any(x in link for x in ['github', 'wikipedia', 'google']):
-                domain = link.split('//')[-1].split('/')[0]
+                domain = link.split('//')[-1].split('/')
                 return {'company': domain.capitalize(), 'target_email': f'security@{domain}'}
     except Exception:
         pass
